@@ -1,22 +1,13 @@
 import React from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  PermissionsAndroid,
-  Image,
-  KeyboardAvoidingView,
-  SafeAreaView
-} from "react-native";
+import { KeyboardAvoidingView, SafeAreaView, Text, TextInput, TouchableOpacity, View } from "react-native";
 
-import { List, Input, Icon } from "../../components";
+import { Icon, List } from "../../components";
 import styles, { COLOR, height } from "../../styles";
 import { getDate, isIos, } from "../../utilities";
 
 const LIGHT_GRAY = "#efefef";
 const chatBot = "chatBot";
-const welcomeText = "Hello, \nType and click send to check the message or \n click report to report the message as fake/spam.";
+const welcomeText = `Hello, \nType and click send to check the message or \nclick report to report the message as fake/spam.`;
 
 export default class ChatBot extends React.Component {
   state = {
@@ -88,7 +79,7 @@ export default class ChatBot extends React.Component {
               <TouchableOpacity
                 style={[styles.circle40, styles.bgTransparent]}
                 onPress={this.onReportClick}>
-                <Icon style={styles.shadow4} type={"Octicons"} name={"report"} size={24} color={COLOR.APP}/>
+                <Icon style={styles.shadow4} name={"warning"} size={24} color={COLOR.APP}/>
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.circle40, styles.bgTransparent]}
