@@ -347,7 +347,9 @@ export default StyleSheet.create({
 
   r0: { right: 0 },
   r10: { right: 10 },
+  r15: { right: 15 },
   r20: { right: 20 },
+  r25: { right: 25 },
   r30: { right: 30 },
   r40: { right: 40 },
 
@@ -368,6 +370,9 @@ export default StyleSheet.create({
 
   b0: { bottom: 0 },
   b10: { bottom: 10 },
+  b15: { bottom: 15 },
+  b20: { bottom: 20 },
+  b25: { bottom: 25 },
 
   b_5: { bottom: -5 },
   b_10: { bottom: -10 },

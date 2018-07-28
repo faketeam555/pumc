@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View , StatusBar} from "react-native";
 import Index from "./src/scenes";
-import { AlertView, SnackBar } from "./src/components";
+import { AlertView, SnackBar, EventLoader } from "./src/components";
 import {COLOR} from './src/styles'
 
 export default class App extends Component {
@@ -15,6 +15,7 @@ export default class App extends Component {
         <Index />
         <AlertView id={"Alert_Root_App"} />
         <SnackBar id={"SnackBar_Root_App"} />
+        <EventLoader id={"EventLoader_Root_App"} />
       </View>
     );
   }

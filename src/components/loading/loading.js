@@ -1,6 +1,6 @@
 import React from "react";
 import { ActivityIndicator, StyleSheet, View } from "react-native";
-import styles, { COLOR } from '../styles';
+import styles, { COLOR } from '../../styles/index';
 
 export default class Loading extends React.PureComponent {
   render() {

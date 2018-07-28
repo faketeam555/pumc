@@ -46,7 +46,6 @@ export default class SnackBar extends PureComponent {
       duration: 5000,
       animationTime: 250,
       maxHeight: 48,
-      maxHeight: 48,
       textColor: "#FFF",
       buttonColor: "#03a9f4",
       backgroundColor: "#323232",
