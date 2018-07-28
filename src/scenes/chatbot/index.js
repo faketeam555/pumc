@@ -11,7 +11,6 @@ const welcomeText = `Hello, \nType and click send to check the message or \nclic
 
 export default class ChatBot extends React.Component {
   state = {
-    message: "",
     messages: [
       {
         user: chatBot,
@@ -27,18 +26,14 @@ export default class ChatBot extends React.Component {
     return <ChatRow leftAlign={user === chatBot} {...rowData} />;
   };
 
-  onMessageTyping = text => {
-    this.setState({ message: text });
-  };
-  onSendClick = () => {
-    let { message } = this.state;
+  onSendClick = (message = "", cb = () => ( {} )) => {
     if (message) {
       this.state.messages.splice(0, 0, { message, messageDate: new Date(), user: this.getRandom() });
-      this.setState({ message: "" });
+      this.setState({}, cb());
     }
   };
-  onReportClick = () => {
-    this.onSendClick();
+  onReportClick = (message, cb = () => ( {} )) => {
+    this.onSendClick(message, cb);
   };
 
   getRandom = () => {
@@ -46,7 +41,7 @@ export default class ChatBot extends React.Component {
   };
 
   render() {
-    let { messages, message } = this.state;
+    let { messages } = this.state;
 
     let keyboardAvoidingProps = isIos ? { behavior: "padding", enabled: true, keyboardVerticalOffset: height / 9 } : {};
     return (
@@ -59,38 +54,76 @@ export default class ChatBot extends React.Component {
               renderRow={this._renderRow}
               ItemSeparatorComponent={() => null}
             />
-            <View
-              style={[
-                styles.flexRow,
-                styles.center,
-                styles.ph10,
-                isIos ? styles.pv5 : {},
-                { backgroundColor: LIGHT_GRAY }
-              ]}>
-              <TextInput
-                multiline
-                autoCorrect={false}
-                underlineColorAndroid={"transparent"}
-                placeholder="Message"
-                onChangeText={this.onMessageTyping}
-                value={message}
-                style={[styles.f1, isIos ? styles.pt0 : {}, styles.pr5, { maxHeight: 100 }]}
-              />
-              <TouchableOpacity
-                style={[styles.circle40, styles.bgTransparent]}
-                onPress={this.onReportClick}>
-                <Icon style={styles.shadow4} name={"warning"} size={24} color={COLOR.APP}/>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.circle40, styles.bgTransparent]}
-                onPress={this.onSendClick}>
-                <Icon style={styles.shadow4} name={"send"} size={24} color={COLOR.APP}/>
-              </TouchableOpacity>
-            </View>
+            <MessageTextInput
+              onReportClick={this.onReportClick}
+              onSendClick={this.onSendClick}/>
           </View>
         </KeyboardAvoidingView>
       </SafeAreaView>
     );
+  }
+}
+
+class MessageTextInput extends React.PureComponent {
+  state = { message: "" };
+
+  onMessageTyping = text => {
+    this.setState({ message: text });
+  };
+  onSendClick = () => {
+    let { message } = this.state;
+    let { onSendClick } = this.props;
+
+    if (message) {
+      onSendClick(message, () => {
+        this.setState({ message: "" });
+      });
+    }
+  };
+  onReportClick = () => {
+    let { message } = this.state;
+    let { onReportClick } = this.props;
+
+    if (message) {
+      onReportClick(message, () => {
+        this.setState({ message: "" });
+      });
+    }
+  };
+
+  render() {
+    let { message = "" } = this.state;
+
+    return (
+      <View
+        style={[
+          styles.flexRow,
+          styles.center,
+          styles.ph10,
+          isIos ? styles.pv5 : {},
+          { backgroundColor: LIGHT_GRAY }
+        ]}>
+        <TextInput
+          multiline
+          autoCorrect={false}
+          underlineColorAndroid={"transparent"}
+          placeholder="Message"
+          onChangeText={this.onMessageTyping}
+          value={message}
+          style={[styles.f1, isIos ? styles.pt0 : {}, styles.pr5, { maxHeight: 100 }]}
+        />
+        <TouchableOpacity
+          style={[styles.circle40, styles.bgTransparent]}
+          onPress={this.onReportClick}>
+          <Icon style={styles.shadow4} name={"warning"} size={24} color={COLOR.APP}/>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.circle40, styles.bgTransparent]}
+          onPress={this.onSendClick}>
+          <Icon style={styles.shadow4} name={"send"} size={24} color={COLOR.APP}/>
+        </TouchableOpacity>
+      </View>
+    )
   }
 }
 
