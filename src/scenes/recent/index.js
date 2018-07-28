@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 
 import { Icon } from '../../components';
+import { getUniqueId} from '../../utilities';
 import styles, { COLOR } from "../../styles";
 
 const containerStyle = [styles.f1, styles.bgWhite, styles.p20];
@@ -16,9 +17,8 @@ export default class Index extends Component {
   render() {
     return (
       <View style={containerStyle}>
-        <Text>
-          Recentsssssss
-        </Text>
+        <Text>Recentsssssss</Text>
+        <Text>{getUniqueId()}</Text>
         <TouchableOpacity style={actionBtnStyle} onPress={this.onChatPress}>
           <Icon name={"chat"} size={24} color={COLOR.WHITE}/>
         </TouchableOpacity>

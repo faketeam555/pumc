@@ -5,6 +5,7 @@ import * as Api from "./api";
 import * as Storage from "./storage";
 import { dispatch, getResetAction, navigate, setTopLevelNavigator } from "./navigationService";
 import {getDate} from './dateTimeFunctions';
+import { getUniqueId } from './deviceInfoFunction';
 
 const { width, height } = Dimensions.get("window");
 
@@ -20,5 +21,6 @@ export {
   navigate,
   dispatch,
   setTopLevelNavigator,
-  getDate
+  getDate,
+  getUniqueId
 };
