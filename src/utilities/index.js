@@ -4,6 +4,7 @@ import { isAndroid, isFunction, isIos } from "./validations";
 import * as Api from "./api";
 import * as Storage from "./storage";
 import { dispatch, getResetAction, navigate, setTopLevelNavigator } from "./navigationService";
+import {getDate} from './dateTimeFunctions';
 
 const { width, height } = Dimensions.get("window");
 
@@ -18,5 +19,6 @@ export {
   getResetAction,
   navigate,
   dispatch,
-  setTopLevelNavigator
+  setTopLevelNavigator,
+  getDate
 };

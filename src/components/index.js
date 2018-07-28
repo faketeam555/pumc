@@ -5,5 +5,6 @@ import Input from "./input";
 import Loading from "./loading";
 import Icon from './icon';
 import Checkbox from "./checkbox";
+import List from "./list";
 
-export { Input, AlertView, Alert, SnackBar, showSnackBar, ReloadOnAppStateChange, Loading, Icon, Checkbox };
+export { Input, AlertView, Alert, SnackBar, showSnackBar, ReloadOnAppStateChange, Loading, Icon, Checkbox, List };
