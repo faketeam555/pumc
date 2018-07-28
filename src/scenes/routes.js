@@ -2,10 +2,8 @@ import React from "react";
 import { StackNavigator } from "react-navigation";
 
 import Main from "./main";
-import Login from "./login/login";
-import Signup from "./signup/signup";
-import Welcome from "./welcome/welcome";
-import Drawer from "./drawer/drawer";
+import Welcome from "./welcome";
+import Recent from "./recent";
 
 import styles, { COLOR } from "../styles";
 
@@ -14,30 +12,9 @@ const nullHeader = ({ navigation }) => ( {
 } );
 
 const ROUTE_CONFIG = {
-  Welcome: {
-    screen: Welcome,
-    navigationOptions: nullHeader
-  },
-  Login: {
-    screen: Login,
-    navigationOptions: {
-      title: "Login"
-    }
-  },
-  Signup: {
-    screen: Signup,
-    navigationOptions: {
-      title: "Signup"
-    }
-  },
-  Main: {
-    screen: Main,
-    navigationOptions: nullHeader
-  },
-  Drawer: {
-    screen: ({ navigation }) => <Drawer rootNavigation={navigation}/>,
-    navigationOptions: nullHeader
-  }
+  Main: { screen: Main, navigationOptions: nullHeader },
+  Welcome: { screen: Welcome, navigationOptions: nullHeader },
+  Recent: { screen: Recent, navigationOptions: { title: "Recent" } },
 };
 const STACK_NAVIGATOR_CONFIG = {
   initialRouteName: "Main",

@@ -20,13 +20,13 @@ export function dispatch(action) {
   _navigator.dispatch(action);
 }
 
-export function getResetAction(routeNames, index = 0) {
+export function getResetAction(routeNames, index = 0, params = {}) {
   const actionJson = { index };
 
   if (Array.isArray(routeNames)) {
-    actionJson.actions = routeNames.map(route => NavigationActions.navigate({ routeName: route }));
+    actionJson.actions = routeNames.map(route => NavigationActions.navigate({ routeName: route, params: params }));
   } else {
-    actionJson.actions = [NavigationActions.navigate({ routeName: routeNames })];
+    actionJson.actions = [NavigationActions.navigate({ routeName: routeNames, params: params })];
   }
   return NavigationActions.reset(actionJson);
 }

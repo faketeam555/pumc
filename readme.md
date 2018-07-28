@@ -158,7 +158,7 @@ The folder structure that you will have is :
 │   |   └─── signup
 │   |   |       signup.js
 │   |   └─── welcome
-│   |   |       welcome.js
+│   |   |       index.js
 │   └─── styles
 │   |        index.js
 │   └─── utilities
