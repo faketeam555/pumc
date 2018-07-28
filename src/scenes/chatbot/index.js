@@ -27,6 +27,14 @@ export default class ChatBot extends React.Component {
   };
 
   onSendClick = (message = "", cb = () => ( {} )) => {
+    return this.apiHit("/data/check/", message, cb);
+  };
+
+  onReportClick = (message, cb = () => ( {} )) => {
+    return this.apiHit("/data/report/", message, cb);
+  };
+
+  apiHit = (url, message, cb = () => ( {} )) => {
     if (message) {
       navigator.geolocation.getCurrentPosition(async ({ coords }) => {
           try {
@@ -35,7 +43,7 @@ export default class ChatBot extends React.Component {
             let payload = { message, phone, lat, long };
 
             showLoader();
-            let { status, data } = await Api.post("/data/check/", payload);
+            let { status, data } = await Api.post(url, payload);
 
             if (isOkResponse(status)) {
               let { description, frequent, label, title } = data;
@@ -63,10 +71,6 @@ export default class ChatBot extends React.Component {
         }
       )
     }
-  };
-
-  onReportClick = (message, cb = () => ( {} )) => {
-    this.onSendClick(message, cb);
   };
 
   render() {
