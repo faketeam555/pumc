@@ -89,7 +89,8 @@ export default class ListView extends React.PureComponent {
     if (isFunction(keyExtractor)) {
       return keyExtractor(item);
     }
-    return item._id ? item._id : JSON.stringify(item);
+    const key = item._id ? item._id : item.id ? item.id : JSON.stringify(item);
+    return key.toString();
   };
 
   onEndReached = async info => {

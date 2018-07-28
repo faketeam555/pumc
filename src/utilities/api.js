@@ -9,7 +9,7 @@ export const del = handleApiCallRN.bind(null, "DELETE");
 function handleApiCallRN(method, url, data = {}, otherOptions = {}) {
   const options = {
     method,
-    timeout: 5000,
+    timeout: config.API_TIME_OUT,
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json"
@@ -26,7 +26,6 @@ function handleApiCallRN(method, url, data = {}, otherOptions = {}) {
   }
 
   options.url = url;
-  console.warn("options", options);
 
   return axios(options);
 }

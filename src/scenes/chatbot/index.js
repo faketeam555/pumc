@@ -1,9 +1,9 @@
 import React from "react";
 import { KeyboardAvoidingView, SafeAreaView, Text, TextInput, TouchableOpacity, View } from "react-native";
 
-import { Icon, List } from "../../components";
+import { Icon, List, showSnackBar, showLoader, hideLoader } from "../../components";
 import styles, { COLOR, height } from "../../styles";
-import { getDate, isIos, } from "../../utilities";
+import { getDate, isIos, getUniqueId, Api, isOkResponse } from "../../utilities";
 
 const LIGHT_GRAY = "#efefef";
 const chatBot = "chatBot";
@@ -28,20 +28,50 @@ export default class ChatBot extends React.Component {
 
   onSendClick = (message = "", cb = () => ( {} )) => {
     if (message) {
-      this.state.messages.splice(0, 0, { message, messageDate: new Date(), user: this.getRandom() });
-      this.setState({}, cb());
+      navigator.geolocation.getCurrentPosition(async ({ coords }) => {
+          try {
+            let phone = getUniqueId();
+            let { latitude: lat, longitude: long } = coords;
+            let payload = { message, phone, lat, long };
+
+            showLoader();
+            let { status, data } = await Api.post("/data/check/", payload);
+
+            if (isOkResponse(status)) {
+              let { description, frequent, label, title } = data;
+              this.state.messages.push({ message, messageDate: new Date(), user: "1" });
+              this.state.messages.push({
+                message: `${title}(${label}) : ${description}`,
+                messageDate: new Date(),
+                user: chatBot
+              });
+              this.setState({}, cb);
+            } else {
+              let { error, message } = data;
+              error && message && showSnackBar({ message });
+            }
+            hideLoader();
+          } catch (err) {
+            cb();
+            hideLoader();
+            return showSnackBar({ message: "Unable to check message, please try again later." });
+          }
+        }, (error) => {
+          cb();
+          hideLoader();
+          return showSnackBar({ message: "Unable to detect your location, Please try again later" });
+        }
+      )
     }
   };
+
   onReportClick = (message, cb = () => ( {} )) => {
     this.onSendClick(message, cb);
   };
 
-  getRandom = () => {
-    return Math.random() * 10 > 5 ? 2 : chatBot;
-  };
-
   render() {
     let { messages } = this.state;
+    let data = [...messages];
 
     let keyboardAvoidingProps = isIos ? { behavior: "padding", enabled: true, keyboardVerticalOffset: height / 9 } : {};
     return (
@@ -50,7 +80,7 @@ export default class ChatBot extends React.Component {
           <View style={[styles.f1, styles.bgWhite]}>
             <List
               inverted
-              data={messages}
+              data={data.reverse()}
               renderRow={this._renderRow}
               ItemSeparatorComponent={() => null}
             />

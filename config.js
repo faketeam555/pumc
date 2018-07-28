@@ -1,5 +1,6 @@
 export default {
-  SERVER_NATIVE_URL: "http://localhost:7070",
+  SERVER_NATIVE_URL: "http://172.20.10.41:8000",
   SERVER_SOCKET_URL: "http://localhost:7900",
-  USERNAME_REGEX: /^[A-Za-z0-9.]+(?:[_$-][A-Za-z0-9.]+)*$/
+  USERNAME_REGEX: /^[A-Za-z0-9.]+(?:[_$-][A-Za-z0-9.]+)*$/,
+  API_TIME_OUT : 60*1000
 };
