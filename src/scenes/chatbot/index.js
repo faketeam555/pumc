@@ -7,6 +7,7 @@ import { getDate, isIos, getUniqueId, Api, isOkResponse } from "../../utilities"
 
 const LIGHT_GRAY = "#efefef";
 const chatBot = "chatBot";
+const normalUser = "1";
 const welcomeText = `Hello, \nType and click send to check the message or \nclick report to report the message as fake/spam.`;
 
 export default class ChatBot extends React.Component {
@@ -47,7 +48,8 @@ export default class ChatBot extends React.Component {
 
             if (isOkResponse(status)) {
               let { description, frequent, label, title } = data;
-              this.state.messages.push({ message, messageDate: new Date(), user: "1" });
+
+              this.state.messages.push({ message, messageDate: new Date(), user: normalUser });
               this.state.messages.push({
                 message: `${title}(${label}) : ${description}`,
                 messageDate: new Date(),
