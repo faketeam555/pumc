@@ -6,7 +6,7 @@ import styles, { COLOR, height } from "../../styles";
 import { getDate, isIos, getUniqueId, Api, isOkResponse, isEmpty, Storage } from "../../utilities";
 
 const MESSAGES = "messages";
-const LIGHT_GRAY = "#cfcfcf";//"#efefef";
+const LIGHT_GRAY = "#efefef";
 const chatBot = "chatBot";
 const normalUser = "1";
 const welcomeText = `Hello, \nType and click send to check the message or \nclick report to report the message as fake/spam.`;
@@ -52,6 +52,7 @@ export default class ChatBot extends React.Component {
   };
 
   apiHit = (url, message, cb = () => ( {} )) => {
+    message = message.trim();
     if (message) {
       navigator.geolocation.getCurrentPosition(async ({ coords }) => {
           try {
@@ -100,7 +101,7 @@ export default class ChatBot extends React.Component {
     let keyboardAvoidingProps = isIos() ? {
       behavior: "padding",
       enabled: true,
-      keyboardVerticalOffset: height / 9
+      keyboardVerticalOffset: height / 11
     } : {};
     return (
       <SafeAreaView style={styles.f1}>
