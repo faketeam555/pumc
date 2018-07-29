@@ -84,7 +84,7 @@ export default class ChatBot extends React.Component {
           } catch (err) {
             cb();
             hideLoader();
-            return showSnackBar({ position, message: "Unable to check message, please try again later." });
+            return showSnackBar({ position, message: "Unable to check/report message, please try again later." });
           }
         }, (error) => {
           cb();
