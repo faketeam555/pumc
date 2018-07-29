@@ -16,8 +16,8 @@ export const COLOR = {
   PRIMARY_BTN_TRANSPARENT: "rgba(234, 75, 95,0.7)",
   FB: "#4468B0",
   GOOGLE: "#D9453D",
-  APP: "#2d2d2d",
-  APP_DARK: "#1d1d1d",
+  APP: "#4468B0",
+  APP_DARK: "#43619c",
   STAR_YELLOW: "#FAD678"
 };
 
