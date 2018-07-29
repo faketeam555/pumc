@@ -18,9 +18,9 @@ export default class RecentDetails extends React.PureComponent {
 
     return (
       <View style={[styles.f1, styles.p15, styles.bgWhite]}>
-        <Text style={[styles.font16, styles.bold]}>{`${title} ${label}`}</Text>
-        <Text style={[styles.font12, styles.textRight, styles.pt5]}>{created_at}</Text>
-        <Text style={[styles.font14, styles.cApp, styles.pt10, styles.pl20]}>{content}</Text>
+        <Text style={[styles.font16, styles.cAppDark, styles.bold]}>{`${title} ${label}`}</Text>
+        <Text style={[styles.font12, styles.cAppDark, styles.textRight, styles.pt5]}>{created_at}</Text>
+        <Text style={[styles.font14,styles.cApp, styles.pt10, styles.pl20]}>{content}</Text>
       </View>
     )
   }

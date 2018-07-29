@@ -85,9 +85,21 @@ class ArticleListRow extends React.PureComponent {
 
     return (
       <View style={[styles.p10]}>
-        <Text style={[styles.font16, styles.bold]}>{`${title} ${label}`}</Text>
-        <Text style={[styles.font14, styles.cApp, styles.pt5, styles.pl20]}>{content}</Text>
-        <Text style={[styles.font12, styles.textRight]}>{created_at}</Text>
+        <Text
+          numberOfLines={1}
+          ellipsizeMode={"tail"}
+          style={[styles.font16, styles.cAppDark, styles.bold]}>
+          {`${title} ${label}`}
+        </Text>
+        <Text
+          numberOfLines={1}
+          ellipsizeMode={"tail"}
+          style={[styles.font14, styles.cApp, styles.pt5, styles.pl20]}>
+          {content}
+        </Text>
+        <Text style={[styles.font12, styles.cAppDark, styles.textRight]}>
+          {created_at}
+        </Text>
       </View>
     )
   }
