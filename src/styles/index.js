@@ -24,7 +24,7 @@ export const COLOR = {
 export default StyleSheet.create({
   sceneContainer: {
     flex: 1,
-    paddingTop: isIos ? 40 : 20
+    paddingTop: isIos() ? 40 : 20
   },
 
   whUndefined: { width: undefined, height: undefined },

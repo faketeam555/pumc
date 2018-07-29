@@ -3,9 +3,10 @@ import { KeyboardAvoidingView, SafeAreaView, Text, TextInput, TouchableOpacity, 
 
 import { Icon, List, showSnackBar, showLoader, hideLoader } from "../../components";
 import styles, { COLOR, height } from "../../styles";
-import { getDate, isIos, getUniqueId, Api, isOkResponse } from "../../utilities";
+import { getDate, isIos, getUniqueId, Api, isOkResponse, isEmpty, Storage } from "../../utilities";
 
-const LIGHT_GRAY = "#efefef";
+const MESSAGES = "messages";
+const LIGHT_GRAY = "#cfcfcf";//"#efefef";
 const chatBot = "chatBot";
 const normalUser = "1";
 const welcomeText = `Hello, \nType and click send to check the message or \nclick report to report the message as fake/spam.`;
@@ -20,6 +21,21 @@ export default class ChatBot extends React.Component {
       }
     ]
   };
+
+  async componentDidMount() {
+    try {
+      showLoader();
+      const messages = await Storage.get(MESSAGES);
+
+      if (!isEmpty(messages)) {
+        this.setState({ messages });
+      }
+      hideLoader();
+    } catch (error) {
+      hideLoader();
+      console.warn("Error in getting list of messages from local storage.");
+    }
+  }
 
   _renderRow = rowData => {
     let { user } = rowData;
@@ -51,10 +67,12 @@ export default class ChatBot extends React.Component {
 
               this.state.messages.push({ message, messageDate: new Date(), user: normalUser });
               this.state.messages.push({
+                frequent,
                 message: `${title}(${label}) : ${description}`,
                 messageDate: new Date(),
-                user: chatBot
+                user: chatBot,
               });
+              Storage.set(MESSAGES, this.state.messages);
               this.setState({}, cb);
             } else {
               let { error, message } = data;
@@ -79,7 +97,11 @@ export default class ChatBot extends React.Component {
     let { messages } = this.state;
     let data = [...messages];
 
-    let keyboardAvoidingProps = isIos ? { behavior: "padding", enabled: true, keyboardVerticalOffset: height / 9 } : {};
+    let keyboardAvoidingProps = isIos() ? {
+      behavior: "padding",
+      enabled: true,
+      keyboardVerticalOffset: height / 9
+    } : {};
     return (
       <SafeAreaView style={styles.f1}>
         <KeyboardAvoidingView style={styles.f1} {...keyboardAvoidingProps}>
@@ -136,7 +158,7 @@ class MessageTextInput extends React.PureComponent {
           styles.flexRow,
           styles.center,
           styles.ph10,
-          isIos ? styles.pv5 : {},
+          isIos() ? styles.pv5 : {},
           { backgroundColor: LIGHT_GRAY }
         ]}>
         <TextInput
@@ -146,17 +168,17 @@ class MessageTextInput extends React.PureComponent {
           placeholder="Message"
           onChangeText={this.onMessageTyping}
           value={message}
-          style={[styles.f1, isIos ? styles.pt0 : {}, styles.pr5, { maxHeight: 100 }]}
+          style={[styles.f1, isIos() ? styles.pt0 : {}, styles.pr5, { maxHeight: 100 }]}
         />
         <TouchableOpacity
           style={[styles.circle40, styles.bgTransparent]}
           onPress={this.onReportClick}>
-          <Icon style={styles.shadow4} name={"warning"} size={24} color={COLOR.APP}/>
+          <Icon style={styles.shadow2} name={"warning"} size={24} color={COLOR.APP}/>
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.circle40, styles.bgTransparent]}
           onPress={this.onSendClick}>
-          <Icon style={styles.shadow4} name={"send"} size={24} color={COLOR.APP}/>
+          <Icon style={styles.shadow2} name={"send"} size={24} color={COLOR.APP}/>
         </TouchableOpacity>
       </View>
     )
