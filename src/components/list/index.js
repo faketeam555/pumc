@@ -135,7 +135,7 @@ export default class ListView extends React.PureComponent {
     data = data ? data : [];
 
     if (!ItemSeparatorComponent) {
-      ItemSeparatorComponent = () => <View style={[styles.clear, styles.bgLightGray]}/>;
+      ItemSeparatorComponent = () => <View style={[styles.clear]}/>;
     }
 
     return (

@@ -15,7 +15,7 @@ const nullHeader = ({ navigation }) => ( {
 const ROUTE_CONFIG = {
   Main: { screen: Main, navigationOptions: nullHeader },
   Welcome: { screen: Welcome, navigationOptions: nullHeader },
-  Recent: { screen: Recent, navigationOptions: { title: "Dashboard" } },
+  Recent: { screen: Recent, navigationOptions: { title: "Articles" } },
   ChatBot: { screen: ChatBot, navigationOptions: { title: "ChatBot" } },
 };
 const STACK_NAVIGATOR_CONFIG = {

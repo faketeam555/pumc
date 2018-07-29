@@ -10,6 +10,7 @@ const LIGHT_GRAY = "#efefef";
 const chatBot = "chatBot";
 const normalUser = "1";
 const welcomeText = `Hello, \nType and click send to check the message or \nclick report to report the message as fake/spam.`;
+const position = `top`;
 
 export default class ChatBot extends React.Component {
   state = {
@@ -77,18 +78,18 @@ export default class ChatBot extends React.Component {
               this.setState({}, cb);
             } else {
               let { error, message } = data;
-              error && message && showSnackBar({ message });
+              error && message && showSnackBar({ position, message });
             }
             hideLoader();
           } catch (err) {
             cb();
             hideLoader();
-            return showSnackBar({ message: "Unable to check message, please try again later." });
+            return showSnackBar({ position, message: "Unable to check message, please try again later." });
           }
         }, (error) => {
           cb();
           hideLoader();
-          return showSnackBar({ message: "Unable to detect your location, Please try again later" });
+        return showSnackBar({ position, message: "Unable to detect your location, Please try again later" });
         }
       )
     }

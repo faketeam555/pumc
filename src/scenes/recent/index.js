@@ -1,39 +1,43 @@
 import React, { Component } from "react";
-import { Text, View, TouchableOpacity } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 
-import { Icon, List } from '../../components';
+import { hideLoader, Icon, List, showLoader, showSnackBar } from '../../components';
+import { Api, getDate, getUniqueId, isOkResponse } from '../../utilities';
 import styles, { COLOR } from "../../styles";
 
 const containerStyle = [styles.f1, styles.bgWhite, styles.ph5];
 const actionBtnStyle = [styles.circle60, styles.bgApp, styles.absolute, styles.r25, styles.b25, styles.shadow4];
+const position = "top";
 
 export default class Index extends Component {
-  state = {
-    data: [
-      { id: 1, title: "text1" },
-      { id: 2, title: "text1" },
-      { id: 3, title: "text1" },
-      { id: 4, title: "text1" },
-      { id: 5, title: "text1" },
-      { id: 6, title: "text1" },
-      { id: 7, title: "text1" },
-      { id: 8, title: "text1" },
-      { id: 9, title: "text1" },
-      { id: 10, title: "text1" },
-      { id: 11, title: "text1" },
-      { id: 12, title: "text1" },
-      { id: 13, title: "text1" },
-      { id: 14, title: "text1" },
-    ]
-  };
+  state = { data: [] };
 
-  onChatPress = ()=>{
-    let {navigation} = this.props;
+  async componentDidMount() {
+    try {
+      showLoader();
+      let payload = { phone: getUniqueId() };
+      let { status, data } = await Api.post("/content/articles/", payload);
+
+      if (isOkResponse(status)) {
+        this.setState({ data });
+      } else {
+        let { error, message } = data;
+        error && message && showSnackBar({ position, message });
+      }
+      hideLoader();
+    } catch (error) {
+      hideLoader();
+      console.warn("Error in getting list of articles from DB.", error), JSON.stringify(error, null, 2);
+    }
+  }
+
+  onChatPress = () => {
+    let { navigation } = this.props;
     navigation.navigate("ChatBot")
   };
 
   _renderRow = (rowData) => {
-    return ( <RecentListRow {...rowData}/> )
+    return ( <ArticleListRow {...rowData}/> )
   };
   _rowTouch = (rowData) => {
 
@@ -57,13 +61,17 @@ export default class Index extends Component {
   }
 }
 
-class RecentListRow extends React.PureComponent {
+class ArticleListRow extends React.PureComponent {
   render() {
-    let { title = "" } = this.props;
+    let { title = "", label = "", content = "", created_at = new Date() } = this.props;
+    label = label ? label != "?" ? `(${label})` : "" : "";
+    created_at = getDate(created_at, "LLL");
 
     return (
-      <View style={[styles.flexRow, styles.p10]}>
-        <Text style={[styles.font14]}>{title}</Text>
+      <View style={[styles.p10]}>
+        <Text style={[styles.font16]}>{`${title} ${label}`}</Text>
+        <Text style={[styles.font14, styles.cApp, styles.pt5, styles.pl20]}>{content}</Text>
+        <Text style={[styles.font12, styles.textRight]}>{created_at}</Text>
       </View>
     )
   }
