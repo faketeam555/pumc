@@ -36,11 +36,26 @@ export default class Index extends Component {
     navigation.navigate("ChatBot")
   };
 
+  _renderNoData = () => {
+    return null;
+
+    return (
+      <View style={[styles.f1, styles.center, styles.p25, styles.pt40, styles.mt20]}>
+        <Text style={[styles.font14, styles.textCenter]}>
+          There is no articles found for you right now, please try again later.
+        </Text>
+      </View>
+    )
+  };
+
   _renderRow = (rowData) => {
     return ( <ArticleListRow {...rowData}/> )
   };
-  _rowTouch = (rowData) => {
 
+  _rowTouch = (rowData) => {
+    let { navigation } = this.props;
+
+    navigation.navigate("RecentDetails", { data: rowData })
   };
 
   render() {
@@ -50,6 +65,7 @@ export default class Index extends Component {
       <View style={containerStyle}>
         <List
           data={data}
+          renderNoData={this._renderNoData}
           renderRow={this._renderRow}
           rowTouch={this._rowTouch}
         />
@@ -69,7 +85,7 @@ class ArticleListRow extends React.PureComponent {
 
     return (
       <View style={[styles.p10]}>
-        <Text style={[styles.font16]}>{`${title} ${label}`}</Text>
+        <Text style={[styles.font16, styles.bold]}>{`${title} ${label}`}</Text>
         <Text style={[styles.font14, styles.cApp, styles.pt5, styles.pl20]}>{content}</Text>
         <Text style={[styles.font12, styles.textRight]}>{created_at}</Text>
       </View>
